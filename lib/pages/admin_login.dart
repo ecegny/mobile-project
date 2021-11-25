@@ -47,7 +47,7 @@ class LoginState extends State {
                         return null;
                       },
                       style: getTextStyle(),
-                      decoration: customInputDecoration("Enter namer"),
+                      decoration: customInputDecoration("Enter name"),
                     ),
                     const SizedBox(
                       height: 20,

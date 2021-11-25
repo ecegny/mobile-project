@@ -3,13 +3,17 @@ class Movie {
   String movieName;
   String description;
   String actors;
-  int? votes;
-  int? mark;
+  int? votes; //oy sayısı
+  int? mark; //puanı
   //String photoname --> assestsdeki fotoğrafın adını vericez eklerken
+  //Movie durumu eklenicek vizyonda ise 1 değilse 2
   Movie(
       {required this.movieName,
       required this.description,
-      required this.actors});
+      required this.actors,
+      id,
+      votes,
+      mark});
 
   Map<String, dynamic> toMovieMap() {
     var map = <String, dynamic>{
@@ -25,8 +29,11 @@ class Movie {
 
   static fromMovieMap(Map<String, dynamic> c) {
     return Movie(
+        id: c['id'],
         movieName: c['movieName'],
         description: c['description'],
-        actors: c['actors']);
+        actors: c['actors'],
+        votes: c['votes'],
+        mark: c['mark']);
   }
 }

@@ -16,7 +16,7 @@ class DbHelper {
   Future<Database> get database async {
     if (_database != null) return _database!;
 
-    _database = await _initDB('movie_app1.db');
+    _database = await _initDB('movie_app2.db');
     return _database!;
   }
 
@@ -122,6 +122,15 @@ class DbHelper {
 
     return await db.insert("movies", movie.toMovieMap(),
         conflictAlgorithm: ConflictAlgorithm.ignore);
+  }
+
+  Future<List<Movie>> getMovies() async {
+    final db = await instance.database;
+    var res = await db.rawQuery("select * from movies");
+
+    return List.generate(res.length, (index) {
+      return Movie.fromMovieMap(res[index]);
+    });
   }
 
   Future<int> insertUser(User user) async {

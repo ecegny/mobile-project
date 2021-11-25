@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:admin_control/data/db_helper.dart';
+import 'package:admin_control/models/movie.dart';
 import 'package:admin_control/models/user.dart';
 import 'package:admin_control/pages/user_login.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,8 @@ class UserHomePage extends StatefulWidget {
 class UserHomeState extends State {
   late Size size;
   User user = User(" ", " ", " ", " ");
+  late List<Movie> movies;
+  int movieCount = 0;
   @override
   void initState() {
     super.initState();
@@ -23,6 +27,7 @@ class UserHomeState extends State {
         user = result;
       });
     });
+    refreshMovies();
   }
 
   @override
@@ -82,5 +87,38 @@ class UserHomeState extends State {
   void goToUserLogin() async {
     await Navigator.push(context,
         MaterialPageRoute(builder: (context) => const UserLoginPage()));
+  }
+
+  void refreshMovies() async {
+    //data dolunca statein etkilediği bütün alanlar çalışacak
+    var moviesFuture = DbHelper.instance.getMovies();
+    moviesFuture.then((data) {
+      movies = data;
+      movieCount = data.length;
+      //bu data bizim db_Helper daki getProducts funcından dönen List<Movie>ımız
+    });
+    // ignore: avoid_print
+    debugPrint('working');
+    debugPrint('$movieCount');
+    //ürünler geldiğinde = then
+  }
+
+  buildMovieList() {
+    return ListView.builder(
+        itemCount: movieCount,
+        itemBuilder: (BuildContext context, int position) {
+          return Card(
+              //her bir elemanı return ediyo
+              color: Colors.cyan,
+              elevation: 2.0,
+              child: ListTile(
+                leading: const CircleAvatar(
+                  backgroundColor: Colors.black12,
+                  child: Text("p"),
+                ),
+                title: Text(movies[position].movieName),
+                subtitle: Text(movies[position].description),
+              ));
+        });
   }
 }
