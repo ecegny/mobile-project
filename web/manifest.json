@@ -1,6 +1,6 @@
 {
-    "name": "admin_control",
-    "short_name": "admin_control",
+    "name": "mobilprg_odev",
+    "short_name": "mobilprg_odev",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

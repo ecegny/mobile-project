@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.admin_control">
+    package="com.example.mobilprg_odev">
    <application
-        android:label="admin_control"
+        android:label="mobilprg_odev"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
