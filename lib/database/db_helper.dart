@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:admin_control/model/movie_local.dart';
+import 'package:movieapp/model/movie_local.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 

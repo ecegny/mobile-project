@@ -1,4 +1,4 @@
-import 'package:admin_control/model/genre.dart';
+import 'package:movieapp/model/genre.dart';
 
 class MovieDetail {
   final int id;

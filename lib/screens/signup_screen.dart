@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:movieapp/style/theme.dart' as Style;
 
 //import '../constants.dart';
 //import 'Login_Screen.dart';
@@ -20,8 +21,9 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Style.Colors.mainColor,
       appBar: AppBar(
-        backgroundColor: Colors.grey[200],
+        backgroundColor: Style.Colors.mainColor,
         elevation: 0,
         leading: IconButton(
           icon: Icon(
@@ -45,7 +47,6 @@ class _SignupScreenState extends State<SignupScreen> {
                     Container(
                       height: double.infinity,
                       width: double.infinity,
-                      color: Colors.grey[200],
                       child: SingleChildScrollView(
                         padding:
                             EdgeInsets.symmetric(horizontal: 25, vertical: 120),
@@ -58,7 +59,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                 "Sign up",
                                 style: TextStyle(
                                     fontSize: 30,
-                                    color: Colors.black,
+                                    color: Colors.grey[600],
                                     fontWeight: FontWeight.bold),
                               ),
                             ),

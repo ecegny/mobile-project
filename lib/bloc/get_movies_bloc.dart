@@ -1,5 +1,5 @@
-import 'package:admin_control/model/movie_response.dart';
-import 'package:admin_control/tmdb/repository.dart';
+import 'package:movieapp/model/movie_response.dart';
+import 'package:movieapp/repository/repository.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MoviesListBloc {
@@ -17,6 +17,6 @@ class MoviesListBloc {
   }
 
   BehaviorSubject<MovieResponse> get subject => _subject;
+  
 }
-
 final moviesBloc = MoviesListBloc();

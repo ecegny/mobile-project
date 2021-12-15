@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:admin_control/model/movie_detail_response.dart';
-import 'package:admin_control/tmdb/repository.dart';
+import 'package:movieapp/model/movie_detail_response.dart';
+import 'package:movieapp/repository/repository.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MovieDetailBloc {

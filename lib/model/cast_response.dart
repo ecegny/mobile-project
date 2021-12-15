@@ -1,4 +1,4 @@
-import 'package:admin_control/model/cast.dart';
+import 'package:movieapp/model/cast.dart';
 
 class CastResponse {
   final List<Cast> casts;

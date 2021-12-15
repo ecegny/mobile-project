@@ -1,5 +1,10 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:movieapp/screens/watchlist_screen.dart';
+import 'package:movieapp/style/theme.dart' as Style;
+import 'package:movieapp/widgets/best_movies.dart';
+import 'package:movieapp/widgets/genres.dart';
+import 'package:movieapp/widgets/now_playing.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'Login_Screen.dart';
@@ -22,10 +27,13 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: Style.Colors.mainColor,
         centerTitle: true,
-        leading: Icon(
-          EvaIcons.menu2Outline,
-          color: Colors.white,
-        ),
+        leading: IconButton(
+            onPressed: goToWatchList,
+            icon: Icon(
+              Icons.playlist_add_check,
+              color: Style.Colors.secondColor,
+              size: 25,
+            )),
         title: Text("Discover ${_firebaseAuth.currentUser.email}"),
         actions: <Widget>[
           IconButton(
@@ -52,5 +60,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
+  }
+
+  Future<void> goToWatchList() async {
+    await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => WatchListScreen()));
   }
 }

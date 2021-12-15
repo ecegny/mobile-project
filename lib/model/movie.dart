@@ -7,13 +7,8 @@ class Movie {
   final String overview;
   final num rating;
 
-  Movie(this.id,
-         this.popularity,
-         this.title,
-         this.backPoster,
-         this.poster,
-         this.overview,
-         this.rating);
+  Movie(this.id, this.popularity, this.title, this.backPoster, this.poster,
+      this.overview, this.rating);
 
   Movie.fromJson(Map<String, dynamic> json)
       : id = json["id"],

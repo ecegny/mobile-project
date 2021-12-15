@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:admin_control/database/db_helper.dart';
-import 'package:admin_control/model/movie_local.dart';
-import 'package:admin_control/screens/home_screen.dart';
-import 'package:admin_control/style/theme.dart' as Style;
-import 'package:admin_control/widgets/movie_cell.dart';
+import 'package:movieapp/database/db_helper.dart';
+import 'package:movieapp/model/movie_local.dart';
+import 'package:movieapp/screens/home_screen.dart';
+import 'package:movieapp/style/theme.dart' as Style;
+import 'package:movieapp/widgets/movie_cell.dart';
 
 class WatchListScreen extends StatefulWidget {
   @override
@@ -35,7 +35,7 @@ class _WatchListScreenState extends State<WatchListScreen> {
             onPressed: goHome,
             icon: Icon(
               Icons.arrow_back_ios_new_outlined,
-              color: Colors.pinkAccent,
+              color: Colors.white,
               size: 25,
             )),
         title: Text(

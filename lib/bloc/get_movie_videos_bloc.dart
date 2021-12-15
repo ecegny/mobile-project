@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:admin_control/model/video_response.dart';
-import 'package:admin_control/tmdb/repository.dart';
+import 'package:movieapp/model/video_response.dart';
+import 'package:movieapp/repository/repository.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MovieVideosBloc {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:movieapp/style/theme.dart' as Style;
 import 'home_screen.dart';
 import 'signup_screen.dart';
 
@@ -20,6 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Style.Colors.mainColor,
       body: isloading
           ? Center(
               child: CircularProgressIndicator(),
@@ -33,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Container(
                       height: double.infinity,
                       width: double.infinity,
-                      color: Colors.grey[200],
+                      //color: Colors.black,
                       child: SingleChildScrollView(
                         padding:
                             EdgeInsets.symmetric(horizontal: 25, vertical: 120),
@@ -44,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               "Sign In",
                               style: TextStyle(
                                   fontSize: 50,
-                                  color: Colors.black,
+                                  color: Colors.grey[600],
                                   fontWeight: FontWeight.bold),
                             ),
                             SizedBox(height: 30),
@@ -96,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Text(
                                     "Don't have an Account ?",
                                     style: TextStyle(
-                                        fontSize: 20, color: Colors.black87),
+                                        fontSize: 20, color: Colors.white),
                                   ),
                                   SizedBox(width: 10),
                                   Hero(
@@ -106,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       style: TextStyle(
                                           fontSize: 21,
                                           fontWeight: FontWeight.bold,
-                                          color: Colors.black),
+                                          color: Colors.grey[600]),
                                     ),
                                   )
                                 ],

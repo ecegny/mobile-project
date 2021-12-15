@@ -1,17 +1,19 @@
-import 'dart:ui';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:admin_control/bloc/get_movie_videos_bloc.dart';
-import 'package:admin_control/database/db_helper.dart';
-import 'package:admin_control/model/movie.dart';
-import 'package:admin_control/model/movie_local.dart';
-import 'package:admin_control/model/video.dart';
-import 'package:admin_control/model/video_response.dart';
-import 'package:admin_control/style/theme.dart' as Style;
-import 'package:admin_control/widgets/casts.dart';
-import 'package:admin_control/widgets/movie_info.dart';
+import 'package:movieapp/bloc/get_movie_videos_bloc.dart';
+import 'package:movieapp/database/db_helper.dart';
+import 'package:movieapp/model/movie.dart';
+import 'package:movieapp/model/movie_local.dart';
+import 'package:movieapp/model/video.dart';
+import 'package:movieapp/model/video_response.dart';
+import 'package:movieapp/style/theme.dart' as Style;
+import 'package:movieapp/widgets/casts.dart';
 
+import 'package:movieapp/widgets/movie_info.dart';
+//import 'package:movieapp/widgets/similar_movies.dart';
 import 'package:sliver_fab/sliver_fab.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -25,13 +27,22 @@ class MovieDetailScreen extends StatefulWidget {
 }
 
 class _MovieDetailScreenState extends State<MovieDetailScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final _commentEditController = TextEditingController();
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final Movie movie;
+  int _totalRateCount = 0;
+  double _totalRating = 0;
+  double _rating;
+  bool _isVisible = false;
+
   _MovieDetailScreenState(this.movie);
 
   @override
   void initState() {
     super.initState();
     movieVideosBloc..getMovieVideos(movie.id);
+    getRateById();
   }
 
   @override
@@ -122,7 +133,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            movie.rating.toString(),
+                            meanString(),
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 14.0,
@@ -131,30 +142,24 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                           SizedBox(
                             width: 5.0,
                           ),
-                          RatingBar(
-                            itemSize: 10.0,
-                            initialRating: movie.rating / 2,
-                            ratingWidget: RatingWidget(
-                              empty: Icon(
-                                EvaIcons.star,
-                                color: Style.Colors.secondColor,
-                              ),
-                              full: Icon(
-                                EvaIcons.star,
-                                color: Style.Colors.secondColor,
-                              ),
-                              half: Icon(
-                                EvaIcons.star,
-                                color: Style.Colors.secondColor,
-                              ),
-                            ),
+                          RatingBar.builder(
+                            itemSize: 17.0,
+                            initialRating: meanDouble(), //fire get
                             minRating: 1,
                             direction: Axis.horizontal,
                             allowHalfRating: true,
-                            itemCount: 5,
-                            itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                            itemCount: 10,
+                            itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                            tapOnlyMode: true,
+                            itemBuilder: (context, _) => Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            ),
                             onRatingUpdate: (rating) {
-                              print(rating);
+                              setState(() {
+                                _rating = rating;
+                              });
+                              saveRate(_rating);
                             },
                           ),
                           IconButton(
@@ -197,13 +202,168 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                     Casts(
                       id: movie.id,
                     ),
-                    //SimilarMovies(id: movie.id)
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.lime[200],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          )),
+                      onPressed: () {
+                        setState(() {
+                          _isVisible = !_isVisible;
+                        });
+                      },
+                      child: Wrap(
+                        children: <Widget>[
+                          Icon(
+                            Icons.comment_sharp,
+                            color: Colors.white,
+                            size: 25,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text("Comments",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Style.Colors.secondColor)),
+                        ],
+                      ),
+                    ),
+                    Visibility(
+                        maintainSize: true,
+                        maintainAnimation: true,
+                        maintainState: true,
+                        visible: _isVisible,
+                        child: SingleChildScrollView(
+                            child: Container(
+                          height: 200,
+                          child: StreamBuilder<QuerySnapshot>(
+                              stream: FirebaseFirestore.instance
+                                  .collection('comments')
+                                  .where('movie_id', isEqualTo: movie.id)
+                                  .snapshots(),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasError) {
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      backgroundColor: Colors.lightBlueAccent,
+                                    ),
+                                  );
+                                }
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      backgroundColor: Colors.lightBlueAccent,
+                                    ),
+                                  );
+                                }
+                                // else if (snapshot.hasData) {
+                                //   return Text(
+                                //       snapshot.data.docs[0]['${movie.id}']);
+                                // }
+                                List<DocumentSnapshot> listOfComment =
+                                    snapshot.data.docs;
+                                return Expanded(
+                                    child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 150,
+                                      child: ListView.builder(
+                                          itemCount: listOfComment.length,
+                                          itemBuilder: (context, index) {
+                                            return Card(
+                                              color: Colors.lime[100],
+                                              elevation: 2.0,
+                                              child: ListTile(
+                                                title: Text(
+                                                  '${listOfComment[index]['comment']}',
+                                                ),
+                                              ),
+                                            );
+                                          }),
+                                    ),
+                                  ],
+                                ));
+                              }),
+                        ))),
+                    Container(
+                      margin: EdgeInsets.only(left: 16.0),
+                      child: TextFormField(
+                        key: _formKey,
+                        controller: _commentEditController,
+                        keyboardType: TextInputType.text,
+                        textAlign: TextAlign.center,
+                        cursorColor: Colors.white,
+                        style: TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                              onPressed: saveComment,
+                              icon: Icon(
+                                Icons.send_sharp,
+                                color: Colors.white,
+                                size: 25,
+                              )),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                          ),
+                          border: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                          ),
+                          labelText: 'Write a comment...',
+                          focusColor: Colors.white,
+                          fillColor: Colors.white,
+                          labelStyle: TextStyle(color: Colors.white),
+                        ),
+                        validator: (value) =>
+                            value.isNotEmpty ? 'Comment cannot be blank' : null,
+                      ),
+                    ),
                   ])))
             ],
           );
         },
       ),
     );
+  }
+
+  String meanString() {
+    if (_totalRating != 0) {
+      return (_totalRating / _totalRateCount).toString();
+    } else {
+      return 0.toString();
+    }
+  }
+
+  double meanDouble() {
+    if (_totalRating != 0) {
+      return (_totalRating / _totalRateCount).toDouble();
+    } else {
+      return 0.toDouble();
+    }
+  }
+
+  getRateById() async {
+    _totalRateCount = 0;
+    _totalRating = 0;
+    await FirebaseFirestore.instance
+        .collection('ratings')
+        .get()
+        .then((movieId) {
+      for (var element in movieId.docs) {
+        if (element.data()['${movie.id}'] != null) {
+          setState(() {
+            _totalRateCount++;
+            _totalRating += element.data()['${movie.id}'];
+          });
+
+          //print(element.data()['${movie.id}']);
+        }
+      }
+    });
   }
 
   Widget _buildLoadingWidget() {
@@ -256,10 +416,33 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
       if (result == -1) {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('The movie could not be add $result')));
+      } else if (result == 0) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('The movie already Added')));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('The movie Added Succesfully $result')));
       }
     });
+  }
+
+  Future<void> saveRate(double rating) async {
+    await FirebaseFirestore.instance
+        .collection('ratings')
+        .doc(_firebaseAuth.currentUser.email)
+        .set({movie.id.toString(): rating}, SetOptions(merge: true)).then(
+            (value) {
+      getRateById();
+    });
+  }
+
+  Future<void> saveComment() async {
+    if (_commentEditController.text.isNotEmpty) {
+      await FirebaseFirestore.instance.collection('comments').doc().set({
+        'movie_id': movie.id,
+        'comment': _commentEditController.text,
+        'email': FirebaseAuth.instance.currentUser.email
+      }).whenComplete(() => _commentEditController.clear());
+    }
   }
 }

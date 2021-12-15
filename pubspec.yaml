@@ -1,4 +1,4 @@
-name: admin_control
+name: movieapp
 description: A new Flutter project.
 
 # The following defines the version and build number for your application.
@@ -30,6 +30,11 @@ dependencies:
   rxdart: ^0.26.0
   sliver_fab: ^1.0.0
   youtube_player_flutter: ^8.0.0
+  firebase_auth: ^3.3.0
+  firebase_core: ^1.10.0
+  cloud_firestore: ^3.1.0
+  sqflite:
+  path:
 
 dev_dependencies:
   flutter_test:

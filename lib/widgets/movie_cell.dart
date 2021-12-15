@@ -49,18 +49,19 @@ class _MovieCellState extends State<MovieCell> {
               ),
             ),
             Expanded(
-                child: new Container(
+                child: Container(
               margin: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
-              child: new Column(
+              child: Column(
                 children: [
                   IconButton(
+                      padding: EdgeInsets.only(left: 155),
                       onPressed: removeFromWatchList,
                       icon: Icon(
                         Icons.delete_outlined,
                         color: Style.Colors.secondColor,
                         size: 25,
                       )),
-                  new Text(
+                  Text(
                     widget.movies[widget.i].title,
                     style: new TextStyle(
                         fontSize: 20.0,

@@ -1,5 +1,5 @@
-import 'package:admin_control/model/genre_response.dart';
-import 'package:admin_control/tmdb/repository.dart';
+import 'package:movieapp/model/genre_response.dart';
+import 'package:movieapp/repository/repository.dart';
 import 'package:rxdart/rxdart.dart';
 
 class GenresListBloc {
@@ -17,6 +17,6 @@ class GenresListBloc {
   }
 
   BehaviorSubject<GenreResponse> get subject => _subject;
+  
 }
-
 final genresBloc = GenresListBloc();

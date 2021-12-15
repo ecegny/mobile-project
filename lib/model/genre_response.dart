@@ -1,4 +1,4 @@
-import 'package:admin_control/model/genre.dart';
+import 'package:movieapp/model/genre.dart';
 
 class GenreResponse {
   final List<Genre> genres;

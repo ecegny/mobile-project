@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.mobilprg_odev">
+    package="com.example.movieapp">
    <application
-        android:label="mobilprg_odev"
+        android:label="movieapp"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

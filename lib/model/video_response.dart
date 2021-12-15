@@ -1,4 +1,4 @@
-import 'package:admin_control/model/video.dart';
+import 'package:movieapp/model/video.dart';
 
 class VideoResponse {
   final List<Video> videos;
