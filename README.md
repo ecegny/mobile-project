@@ -1,6 +1,6 @@
 # Mobil Programlama Ödev: MovieApp
 
-❮img src="https://user-images.githubusercontent.com/61249864/146816144-c6ddbc1c-ae0d-4f5a-8814-fc67a2b29640.png" width="100"❯
+❮img src="ScreenShots/login.png" width="100" ❯
 ![](ScreenShots/login.png)
 ![login](https://user-images.githubusercontent.com/61249864/146816144-c6ddbc1c-ae0d-4f5a-8814-fc67a2b29640.png)
 ![signup](https://user-images.githubusercontent.com/61249864/146816152-030fb5fa-98f6-4468-bc6c-6bf1400e5db1.png)
