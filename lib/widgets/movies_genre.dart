@@ -87,21 +87,21 @@ class _MovieGenreState extends State<MovieGenre> {
                   SizedBox(
                     height: 5.0,
                   ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        movies[index].rating.toString(),
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 10.0,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        width: 5.0,
-                      ),
-                    ],
-                  )
+                  // Row(
+                  //   crossAxisAlignment: CrossAxisAlignment.center,
+                  //   children: <Widget>[
+                  //     Text(
+                  //       movies[index].rating.toString(),
+                  //       style: TextStyle(
+                  //           color: Colors.white,
+                  //           fontSize: 10.0,
+                  //           fontWeight: FontWeight.bold),
+                  //     ),
+                  //     SizedBox(
+                  //       width: 5.0,
+                  //     ),
+                  //   ],
+                  // )
                 ],
               ),
             ),

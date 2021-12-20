@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:movieapp/bloc/get_now_playing_bloc.dart';
 import 'package:movieapp/model/movie.dart';
 import 'package:movieapp/model/movie_response.dart';
@@ -138,17 +137,6 @@ class _NowPlayingState extends State<NowPlaying> {
                               Style.Colors.mainColor.withOpacity(1.0),
                               Style.Colors.mainColor.withOpacity(0.0)
                             ]),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 0.0,
-                      top: 0.0,
-                      left: 0.0,
-                      right: 0.0,
-                      child: Icon(
-                        FontAwesomeIcons.playCircle,
-                        color: Style.Colors.secondColor,
-                        size: 40.0,
                       ),
                     ),
                     Positioned(

@@ -1,10 +1,10 @@
-import 'package:admin_control/model/cast_response.dart';
-import 'package:admin_control/model/genre_response.dart';
-import 'package:admin_control/model/movie_detail_response.dart';
-import 'package:admin_control/model/movie_response.dart';
+import 'package:movieapp/model/cast_response.dart';
+import 'package:movieapp/model/genre_response.dart';
+import 'package:movieapp/model/movie_detail_response.dart';
+import 'package:movieapp/model/movie_response.dart';
 import 'package:dio/dio.dart';
 
-import 'package:admin_control/model/video_response.dart';
+import 'package:movieapp/model/video_response.dart';
 
 class MovieRepository {
   final String apiKey = "ee0a80b4e6ed6c7ee7fc30ff4add37c0";
@@ -14,9 +14,7 @@ class MovieRepository {
   var getMoviesUrl = '$mainUrl/discover/movie';
   var getPlayingUrl = '$mainUrl/movie/now_playing';
   var getGenresUrl = "$mainUrl/genre/movie/list";
-  var getPersonsUrl = "$mainUrl/trending/person/week";
   var movieUrl = "$mainUrl/movie";
-  var getSearchUrl = "$mainUrl/search/movie";
 
   Future<MovieResponse> getMovies() async {
     var params = {"api_key": apiKey, "language": "en-US", "page": 1};
@@ -90,18 +88,6 @@ class MovieRepository {
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
       return VideoResponse.withError("$error");
-    }
-  }
-
-  Future<MovieResponse> getSimilarMovies(int id) async {
-    var params = {"api_key": apiKey, "language": "en-US"};
-    try {
-      Response response = await _dio.get(movieUrl + "/$id" + "/similar",
-          queryParameters: params);
-      return MovieResponse.fromJson(response.data);
-    } catch (error, stacktrace) {
-      print("Exception occured: $error stackTrace: $stacktrace");
-      return MovieResponse.withError("$error");
     }
   }
 

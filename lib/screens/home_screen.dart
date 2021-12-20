@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
               color: Style.Colors.secondColor,
               size: 25,
             )),
-        title: Text("Discover ${_firebaseAuth.currentUser.email}"),
+        title: Text("Discover"), //${_firebaseAuth.currentUser.email}
         actions: <Widget>[
           IconButton(
               onPressed: () async {

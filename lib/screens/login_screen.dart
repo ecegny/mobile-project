@@ -37,18 +37,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       //color: Colors.black,
                       child: SingleChildScrollView(
                         padding:
-                            EdgeInsets.symmetric(horizontal: 25, vertical: 120),
+                            EdgeInsets.symmetric(horizontal: 25, vertical: 20),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              "Sign In",
-                              style: TextStyle(
-                                  fontSize: 50,
-                                  color: Colors.grey[600],
-                                  fontWeight: FontWeight.bold),
+                            Image.asset(
+                              'icons/logo.png',
                             ),
-                            SizedBox(height: 30),
+                            SizedBox(height: 10),
                             TextFormField(
                               controller: _emailEditController,
                               keyboardType: TextInputType.emailAddress,
@@ -75,15 +71,26 @@ class _LoginScreenState extends State<LoginScreen> {
                                   customInputDecoration("Enter password"),
                             ),
                             SizedBox(height: 80),
-                            ElevatedButton(
-                              child: const Text(
-                                "Login",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 20),
+                            SizedBox(
+                              height: 50,
+                              width: 290,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors.deepOrange[200],
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(50),
+                                    )),
+                                child: const Text(
+                                  "Login",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                onPressed: login,
                               ),
-                              onPressed: login,
                             ),
-                            SizedBox(height: 10),
+                            SizedBox(height: 90),
                             GestureDetector(
                               onTap: () {
                                 Navigator.of(context).push(
@@ -107,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       style: TextStyle(
                                           fontSize: 21,
                                           fontWeight: FontWeight.bold,
-                                          color: Colors.grey[600]),
+                                          color: Colors.deepOrange[200]),
                                     ),
                                   )
                                 ],
@@ -176,6 +183,21 @@ class _LoginScreenState extends State<LoginScreen> {
       focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: Colors.pink)),
+      prefixIcon: hint.contains("password")
+          ? Padding(
+              padding: EdgeInsets.all(0.0),
+              child: Icon(
+                Icons.password,
+                color: Colors.grey,
+              ), // icon is 48px widget.
+            )
+          : Padding(
+              padding: EdgeInsets.all(0.0),
+              child: Icon(
+                Icons.email_outlined,
+                color: Colors.grey,
+              ), // icon is 48px widget.
+            ),
     );
   }
 }

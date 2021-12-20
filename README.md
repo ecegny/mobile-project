@@ -1,4 +1,3 @@
-# Flutter Movie App
-
+# Mobil Programlama Ödev: MovieApp
 
 

@@ -13,7 +13,7 @@ import 'package:movieapp/style/theme.dart' as Style;
 import 'package:movieapp/widgets/casts.dart';
 
 import 'package:movieapp/widgets/movie_info.dart';
-//import 'package:movieapp/widgets/similar_movies.dart';
+
 import 'package:sliver_fab/sliver_fab.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -279,6 +279,9 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                                                 title: Text(
                                                   '${listOfComment[index]['comment']}',
                                                 ),
+                                                subtitle: Text(
+                                                  '${listOfComment[index]['email']}',
+                                                ),
                                               ),
                                             );
                                           }),
@@ -332,7 +335,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
 
   String meanString() {
     if (_totalRating != 0) {
-      return (_totalRating / _totalRateCount).toString();
+      return (_totalRating / _totalRateCount).toStringAsFixed(1);
     } else {
       return 0.toString();
     }

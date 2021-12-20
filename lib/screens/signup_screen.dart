@@ -49,18 +49,14 @@ class _SignupScreenState extends State<SignupScreen> {
                       width: double.infinity,
                       child: SingleChildScrollView(
                         padding:
-                            EdgeInsets.symmetric(horizontal: 25, vertical: 120),
+                            EdgeInsets.symmetric(horizontal: 25, vertical: 20),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Hero(
                               tag: '1',
-                              child: Text(
-                                "Sign up",
-                                style: TextStyle(
-                                    fontSize: 30,
-                                    color: Colors.grey[600],
-                                    fontWeight: FontWeight.bold),
+                              child: Image.asset(
+                                'icons/logo.png',
                               ),
                             ),
                             SizedBox(height: 30),
@@ -90,13 +86,24 @@ class _SignupScreenState extends State<SignupScreen> {
                                   customInputDecoration("Enter password"),
                             ),
                             SizedBox(height: 80),
-                            ElevatedButton(
-                              child: const Text(
-                                "Signup",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 20),
+                            SizedBox(
+                              height: 50,
+                              width: 290,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors.deepOrange[200],
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(50),
+                                    )),
+                                child: const Text(
+                                  "Signup",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                onPressed: signUp,
                               ),
-                              onPressed: signUp,
                             ),
                           ],
                         ),
@@ -187,6 +194,21 @@ class _SignupScreenState extends State<SignupScreen> {
       focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: Colors.pink)),
+      prefixIcon: hint.contains("password")
+          ? Padding(
+              padding: EdgeInsets.all(0.0),
+              child: Icon(
+                Icons.password,
+                color: Colors.grey,
+              ), // icon is 48px widget.
+            )
+          : Padding(
+              padding: EdgeInsets.all(0.0),
+              child: Icon(
+                Icons.email_outlined,
+                color: Colors.grey,
+              ), // icon is 48px widget.
+            ),
     );
   }
 }
